@@ -1,0 +1,131 @@
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+  background-color: #ffffff;
+  background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
+}
+
+/* header design */
+header {
+  background-color: #284d7f;
+  padding: 15px 32px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+  color: #ffffff;
+  font-family: "McLaren", cursive;
+  font-weight: 200;
+}
+
+.notes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1em;
+  padding: 15px;
+}
+
+.note {
+  /* background: #fff; */
+  background-color: rgb(255, 255, 255);
+  border-radius: 7px;
+  box-shadow: 0 2px 5px #ccc;
+  padding: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.note h1 {
+  font-size: 1.1em;
+  margin-bottom: 6px;
+}
+
+.note p {
+  font-size: 1.1em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.note button {
+  margin: auto 10px 0 auto;
+  color: #284d7f;
+  border: none;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  outline: none;
+}
+
+/* CreateArea css */
+
+form.create-note {
+  position: relative;
+  margin: 30px 15px;
+  background: #ffffff5f;
+  padding: 15px;
+  border-radius: 7px;
+  box-shadow: 0 1px 5px rgb(114, 113, 113);
+}
+
+form.create-note input,
+form.create-note textarea {
+  width: 100%;
+  border: none;
+  padding: 4px;
+  outline: none;
+  font-size: 1.2em;
+  font-family: inherit;
+  resize: none;
+  background-color: transparent;
+}
+
+form.create-note button {
+  position: absolute;
+  right: 18px;
+  bottom: -18px;
+  background: #284d7f;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  outline: none;
+}
+
+/* Footer css */
+/* footer {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+}
+
+footer p {
+  color: #ffffff;
+} */
+
+@media screen and (min-width: 768px) {
+  form.create-note {
+    width: 480px;
+    margin: 30px auto;
+  }
+  .notes {
+    padding: 15px 32px;
+  }
+  .note {
+    height: 240px;
+  }
+}
