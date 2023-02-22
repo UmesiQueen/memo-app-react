@@ -10,35 +10,22 @@ body {
   height: 100%;
   width: 100%;
   font-family: "Montserrat", sans-serif;
-  background-color: #ffffff;
-  background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
+  background-color: rgb(35, 48, 63);
+  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png");;
 }
 
-/* header design */
-header {
-  background-color: #284d7f;
-  padding: 15px 32px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-}
-
-header h1 {
-  color: #ffffff;
-  font-family: "McLaren", cursive;
-  font-weight: 200;
-}
-
+/* notes style */
 .notes {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1em;
   padding: 15px;
 }
 
 .note {
-  /* background: #fff; */
   background-color: rgb(255, 255, 255);
   border-radius: 7px;
-  box-shadow: 0 2px 5px #ccc;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
   padding: 15px;
   width: 100%;
   display: flex;
@@ -48,26 +35,35 @@ header h1 {
 .note h1 {
   font-size: 1.1em;
   margin-bottom: 6px;
+  word-wrap: break-word;
 }
 
 .note p {
   font-size: 1.1em;
   white-space: pre-wrap;
   word-wrap: break-word;
+  margin-bottom: 20px;
 }
 
-.note button {
+.notes button {
   margin: auto 10px 0 auto;
-  color: #284d7f;
+  color: rgb(151, 64, 99);
   border: none;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   cursor: pointer;
   outline: none;
+  position: absolute;
+  right: 5px;
+  bottom: 0;
 }
 
-/* CreateArea css */
+.notes button:hover {
+  background-color: rgba(254, 150, 118, 0.546);
+  color: rgb(255, 255, 255);
+}
 
+/* CreateArea style */
 form.create-note {
   position: relative;
   margin: 30px 15px;
@@ -79,6 +75,7 @@ form.create-note {
 
 form.create-note input,
 form.create-note textarea {
+  color: #fff;
   width: 100%;
   border: none;
   padding: 4px;
@@ -89,11 +86,16 @@ form.create-note textarea {
   background-color: transparent;
 }
 
+::placeholder {
+  color: #fff;
+  opacity: 1;
+}
+
 form.create-note button {
   position: absolute;
   right: 18px;
   bottom: -18px;
-  background: #284d7f;
+  background: rgb(151, 64, 99);
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -104,18 +106,108 @@ form.create-note button {
   outline: none;
 }
 
-/* Footer css */
-/* footer {
-  position: absolute;
-  text-align: center;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem;
+form.create-note button:hover,
+.animate .close:hover,
+.buttons button:hover {
+  background-color: rgb(254, 149, 118);
+  color: rgb(255, 255, 255);
 }
 
-footer p {
-  color: #ffffff;
-} */
+/* animatePresence style */
+.animate-container {
+  width: 100vw;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  backdrop-filter: blur(1px);
+}
+
+.animate {
+  width: 90%;
+  height: 80%;
+  padding: 20px 30px;
+  margin: 0 auto;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+  border-radius: 7px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.animate .close {
+  width: 40px;
+  height: 36px;
+  position: absolute;
+  top: -18px;
+  right: 18px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(151, 64, 99);
+  /* border: 1px solid rgb(41, 79, 128); */
+  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+  border: none;
+  font-weight: 600;
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+}
+
+.textarea-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.animate .textarea-container textarea,
+.animate input {
+  resize: none;
+  border: none;
+  outline: none;
+}
+
+.animate .textarea-container textarea {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  box-sizing: content-box;
+  font-size: 20px;
+}
+
+.animate .title {
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  /* max-height: 100%; */
+  word-wrap: break-word;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.buttons button {
+  background-color: rgb(151, 64, 99);
+  color: white;
+  margin: 0 5px;
+  height: 2em;
+  width: 4em;
+  border-radius: 5px;
+  border: none;
+  font-weight: 600;
+}
 
 @media screen and (min-width: 768px) {
   form.create-note {
@@ -127,5 +219,13 @@ footer p {
   }
   .note {
     height: 240px;
+  }
+  .animate {
+    width: 50% !important;
+    height: 70% !important;
+  }
+
+  .animate textarea {
+    padding: 0 15px;
   }
 }

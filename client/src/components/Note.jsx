@@ -1,23 +1,32 @@
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+import { motion } from "framer-motion";
+
 function Note(props) {
-  const content = props.content;
-
   return (
-    <div className="note">
-      <h1>{props.title}</h1>
-
-      <p>{content.length > 130 ? content.slice(0, 130) + "..." : content}</p>
-
+    <motion.div style={{ position: "relative" }}>
+      <motion.div
+        className="note"
+        
+        layoutId={props.id}
+       onClick={() => props.setSelectedId(props.id)}
+      >
+        <motion.h1>{props.title}</motion.h1>
+        <motion.p>
+          {props.content.length > 150
+            ? props.content.slice(0, 150)
+            : props.content}
+        </motion.p>
+      </motion.div>
       <IconButton
         onClick={() => {
-          props.onClick(props.id);
+          props.deleteItem(props.id);
         }}
       >
         <DeleteIcon />
       </IconButton>
-    </div>
+    </motion.div>
   );
 }
 

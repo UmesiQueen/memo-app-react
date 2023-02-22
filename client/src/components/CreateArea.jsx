@@ -8,7 +8,7 @@ function CreateArea(props) {
   const [note, setNote] = useState({ id: "", title: "", content: "" });
   const [zoom, setZoom] = useState(false);
 
-  function getNote(e) {
+  const getNote = (e) => {
     const { name, value } = e.target;
 
     setNote((prev) => {
@@ -18,7 +18,7 @@ function CreateArea(props) {
         [name]: value,
       };
     });
-  }
+  };
 
   return (
     <div>
@@ -51,6 +51,7 @@ function CreateArea(props) {
 
         <Zoom in={zoom}>
           <Fab
+            style={{ display: props.selected ? "none" : "flex" }}
             onClick={(e) => {
               props.onClick(note);
               setNote({ id: "", title: "", content: "" });
