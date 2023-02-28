@@ -1,58 +1,24 @@
 import express from "express";
-import bodyParser from "body-parser";
-import mongoose, { Schema, model } from "mongoose";
 import dotenv from "dotenv";
+import colors from "colors";
+import cors from "cors";
 import { router } from "./routes/memoRoutes.js";
+import ConnectDB from "./config/memoDB.js";
+// import ErrorHandler from "./middleware/errorHandler.js";
 
 dotenv.config();
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
 
 const PORT = process.env.PORT;
-const uri = process.env.URI;
 
-mongoose.set("strictQuery", false);
+app.use("/", router);
 
-mongoose
-  .connect(uri)
-  .then(console.log("Database connected successfully."))
-  .catch((err) => {
-    console.error(err);
-  });
-
-const memoSchema = Schema({
-  title: String,
-  content: String,
-});
-
-const Memo = model("memo", memoSchema);
-
-app.get("/", router);
-
-app.post("/", (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
-
-  const memo = new Memo({
-    title: title,
-    content: content,
-  });
-
-  memo
-    .save()
-    .then(() => {
-      res.json({
-        Title: title,
-        content: content,
-      });
-    })
-    .catch((err) => {
-      console.log("Error occurred while inserting post into DB.");
-      console.error(err);
-    });
-});
+//override default error handler
+// app.use(ErrorHandler); 
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
