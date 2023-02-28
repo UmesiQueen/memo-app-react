@@ -1,21 +1,59 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import CreateArea from "./components/CreateArea";
-import "./App.css";
-
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import { motion, AnimatePresence } from "framer-motion";
+import Axios from "axios";
+import "./App.css";
 
 function App() {
-  const [array, addArray] = useState([]);
+  const [memos, addMemo] = useState([]);
   const [selected, setSelected] = useState(null);
 
-  function deleteItem(id) {
-    addArray((prev) => prev.filter((item) => item.id !== id));
-  }
+  const client = Axios.create({
+    baseURL: "https://memo-app-q5de.onrender.com/",
+  });
+
+  useEffect(() => {
+    client
+      .get()
+      .then((res) => {
+        const result = res.data;
+        addMemo(result);
+      })
+      .catch((err) => {
+        console.error(`Read Error(DB): ${err}`);
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const InsertMemo = (memo) => {
+    client
+      .post("", memo)
+      .then((res) => {
+        const result = res.data;
+        addMemo([...memos, result]);
+      })
+      .catch((err) => {
+        console.error(`Insert Error(DB): ${err}`);
+      });
+  };
+
+  // const UpdateMemo = () => {
+  // };
+
+  const DeleteMemo = (id) => {
+    client
+      .delete("", { data: { _id: id } })
+      .then(() => {
+        addMemo(memos.filter((memo) => memo._id !== id));
+      })
+      .catch((err) => {
+        console.error(`Delete Error(DB): ${err}`);
+      });
+  };
 
   return (
     <div className="App">
@@ -24,22 +62,19 @@ function App() {
         <CreateArea
           selected={selected}
           onClick={(note) => {
-            addArray((prev) => {
-              return [...prev, note];
-            });
+            InsertMemo(note);
           }}
         />
 
         <div className="notes">
-          {array
+          {memos
             .slice(0)
             .reverse()
             .map((note) => (
-              <motion.div style={{ position: "relative" }}>
+              <motion.div style={{ position: "relative" }} key={note._id}>
                 <motion.div
                   className="note"
-                  key={note.id}
-                  layoutId={note.id}
+                  layoutId={note._id}
                   onClick={() => setSelected(note)}
                 >
                   <motion.h1>{note.title}</motion.h1>
@@ -51,7 +86,7 @@ function App() {
                 </motion.div>
                 <IconButton
                   onClick={() => {
-                    deleteItem(note.id);
+                    DeleteMemo(note._id);
                   }}
                 >
                   <DeleteIcon />
@@ -63,7 +98,7 @@ function App() {
         <AnimatePresence>
           {selected && (
             <motion.div className="animate-container">
-              <motion.div layoutId={selected.id} className="animate">
+              <motion.div layoutId={selected._id} className="animate">
                 <motion.button
                   className="close"
                   onClick={() => setSelected(null)}

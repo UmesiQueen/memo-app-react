@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { v4 } from "uuid";
 import Zoom from "@mui/material/Zoom";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 
 function CreateArea(props) {
-  const [note, setNote] = useState({ id: "", title: "", content: "" });
+  const [note, setNote] = useState({ title: "", content: "" });
   const [zoom, setZoom] = useState(false);
 
   const getNote = (e) => {
@@ -14,7 +13,6 @@ function CreateArea(props) {
     setNote((prev) => {
       return {
         ...prev,
-        id: v4(),
         [name]: value,
       };
     });
@@ -54,7 +52,7 @@ function CreateArea(props) {
             style={{ display: props.selected ? "none" : "flex" }}
             onClick={(e) => {
               props.onClick(note);
-              setNote({ id: "", title: "", content: "" });
+              setNote({title: "", content: "" });
               e.preventDefault();
             }}
           >
