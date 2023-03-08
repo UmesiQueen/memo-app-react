@@ -17,6 +17,10 @@ function CreateArea(props) {
       };
     });
   };
+  const resizeTextArea = (e) => {
+    e.target.style.height = "auto";
+    e.target.style.height = e.target.scrollHeight + "px";
+  };
 
   return (
     <div>
@@ -27,19 +31,22 @@ function CreateArea(props) {
         }}
       >
         {zoom && (
-          <input
+          <textarea
             style={{ fontWeight: 700 }}
             name="title"
             placeholder="Title"
             value={note.title}
             onChange={getNote}
+            rows={1}
+            onInput={resizeTextArea}
           />
         )}
 
         <textarea
+          id="content"
           name="content"
           placeholder="I've got an idea..."
-          rows={zoom ? 3 : 1}
+          onInput={resizeTextArea}
           onChange={getNote}
           value={note.content}
           onClick={() => {
@@ -52,7 +59,10 @@ function CreateArea(props) {
             style={{ display: props.selected ? "none" : "flex" }}
             onClick={(e) => {
               props.onClick(note);
-              setNote({title: "", content: "" });
+              setNote({ title: "", content: "" });
+              setZoom(false);
+              const element = document.getElementById("content");
+              element.style.height = "27px";
               e.preventDefault();
             }}
           >

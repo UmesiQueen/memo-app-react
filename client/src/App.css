@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=McLaren&family=Montserrat&display=swap");
+
 *,
 *::after,
 *::before {
@@ -10,30 +12,41 @@ body {
   height: 100%;
   width: 100%;
   font-family: "Montserrat", sans-serif;
+  font-size: 15px;
   background-color: rgb(35, 48, 63);
-  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png");;
+  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png");
 }
 
 /* notes style */
 .notes {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  align-items: start;
   gap: 1em;
   padding: 15px;
 }
 
-.note {
+.notes > div {
+  position: relative;
+  height: 100%;
   background-color: rgb(255, 255, 255);
   border-radius: 7px;
   box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
-  padding: 15px;
+  overflow: hidden;
+}
+
+.note {
+  height: 100%;
   width: 100%;
+  padding: 15px 20px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .note h1 {
   font-size: 1.1em;
+  font-weight: 700;
   margin-bottom: 6px;
   word-wrap: break-word;
 }
@@ -58,7 +71,8 @@ body {
   bottom: 0;
 }
 
-.notes button:hover {
+.notes button:hover,
+.notes button:active {
   background-color: rgba(254, 150, 118, 0.546);
   color: rgb(255, 255, 255);
 }
@@ -73,21 +87,28 @@ form.create-note {
   box-shadow: 0 1px 5px rgb(114, 113, 113);
 }
 
-form.create-note input,
 form.create-note textarea {
-  color: #fff;
   width: 100%;
-  border: none;
-  padding: 4px;
-  outline: none;
+  height: auto;
+
   font-size: 1.2em;
   font-family: inherit;
-  resize: none;
   background-color: transparent;
+  color: #fff;
+
+  overflow: hidden;
+  box-sizing: content-box;
+  padding: 4px;
+}
+
+textarea {
+  resize: none;
+  border: none;
+  outline: none;
 }
 
 ::placeholder {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.761);
   opacity: 1;
 }
 
@@ -107,25 +128,26 @@ form.create-note button {
 }
 
 form.create-note button:hover,
-.animate .close:hover,
-.buttons button:hover {
+.animation-container .close:hover,
+.btn-container button:hover {
   background-color: rgb(254, 149, 118);
   color: rgb(255, 255, 255);
 }
 
-/* animatePresence style */
-.animate-container {
+/* animation-containerPresence style */
+.overlay {
   width: 100vw;
   height: 100%;
   position: fixed;
   top: 0;
   z-index: 1;
   backdrop-filter: blur(1px);
+  background-color: #1b191953;
 }
 
-.animate {
+.animation-container {
   width: 90%;
-  height: 80%;
+  height: 85%;
   padding: 20px 30px;
   margin: 0 auto;
 
@@ -134,7 +156,6 @@ form.create-note button:hover,
   left: 50%;
   transform: translate(-50%, -50%) !important;
 
-  background-color: rgb(255, 255, 255);
   box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
   border-radius: 7px;
 
@@ -142,7 +163,7 @@ form.create-note button:hover,
   flex-direction: column;
 }
 
-.animate .close {
+.animation-container .close {
   width: 40px;
   height: 36px;
   position: absolute;
@@ -150,7 +171,6 @@ form.create-note button:hover,
   right: 18px;
   background-color: rgb(255, 255, 255);
   color: rgb(151, 64, 99);
-  /* border: 1px solid rgb(41, 79, 128); */
   box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
   border: none;
   font-weight: 600;
@@ -159,51 +179,33 @@ form.create-note button:hover,
   outline: none;
 }
 
-.textarea-container {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+.animation-container h1 {
+  font-size: 1.4em;
+  font-weight: 700;
 }
 
-.animate .textarea-container textarea,
-.animate input {
-  resize: none;
-  border: none;
-  outline: none;
-}
-
-.animate .textarea-container textarea {
+.animation-container textarea {
   height: 100%;
   width: 100%;
   overflow-y: scroll;
   box-sizing: content-box;
   font-size: 20px;
+  padding-top: 10px;
+  background-color: inherit;
 }
 
-.animate .title {
-  display: block;
-  font-size: 2em;
-  margin-block-start: 0.5em;
-  margin-block-end: 0.5em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: bold;
-  /* max-height: 100%; */
-  word-wrap: break-word;
-}
-
-.buttons {
+.btn-container {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
-.buttons button {
+.btn-container button {
   background-color: rgb(151, 64, 99);
   color: white;
   margin: 0 5px;
-  height: 2em;
-  width: 4em;
+  height: 2.5em;
+  width: 4.5em;
   border-radius: 5px;
   border: none;
   font-weight: 600;
@@ -214,18 +216,23 @@ form.create-note button:hover,
     width: 480px;
     margin: 30px auto;
   }
+
   .notes {
     padding: 15px 32px;
   }
-  .note {
-    height: 240px;
-  }
-  .animate {
+
+  .animation-container {
     width: 50% !important;
     height: 70% !important;
+    padding: 20px 40px;
   }
 
-  .animate textarea {
-    padding: 0 15px;
+  .animation-container h1 {
+    font-size: 2em;
+  }
+
+  .animation-container textarea {
+    padding-right: 15px;
+    padding-left: 10px;
   }
 }
